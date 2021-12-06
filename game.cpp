@@ -2,8 +2,6 @@
 #include "game.h" // header in local directory
 #include <iostream> // header in standard library
 
-using namespace std;
-
 Game::Game(void) {
     GameState init_state;
     // create the first state

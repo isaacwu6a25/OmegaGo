@@ -5,8 +5,6 @@
 #include <array>
 #include <vector>
 
-using namespace std;
-
 // board #defines
 #define SIZE                19
 #define NUM_INTERSECTIONS   SIZE * SIZE
