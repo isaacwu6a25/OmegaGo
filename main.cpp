@@ -1,13 +1,13 @@
 // my_program.cpp
 #include <iostream>
-#include "game.h"
+#include "gamestate.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 
-    Game gogame;
-
+    GameState state = GameState(0);
+    state.printboard();
 
     return 0;
 }
