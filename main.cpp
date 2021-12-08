@@ -7,7 +7,6 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
     GameState state = GameState(0);
-    state.printboard();
 
     return 0;
 }
