@@ -3,31 +3,35 @@
 
 #include <array>
 #include <vector>
+#include "definitions.h"
 
 //board #defines
 #define BOARD_SIZE  19
 #define TOTAL_SIZE  BOARD_SIZE * BOARD_SIZE
-#define BLACK       0
-#define WHITE       1
-#define EMPTY       0
+#define BLACK       false
+#define WHITE       true
+#define EMPTY       false
+#define NEMPTY      true
+typedef std::array<bool, TOTAL_SIZE> board_t;
 
 //game #defines
 #define READ_BACK   4
+typedef bool player_t;
+typedef int move_t;
 
 // neural #defines
 #define OUTPUT_SIZE (READ_BACK) * 2 + 1
-
-typedef bool player_t;
-typedef std::array<bool, TOTAL_SIZE> board_t;
 typedef std::array<board_t, OUTPUT_SIZE> bundle_t;
+typedef std::array<bool, TOTAL_SIZE+1> nn_out_t;
+
+// pointer type definitions
+typedef std::shared_ptr<board_t> board_ptr;
 
 class GameState {
 
     /* (4+1) x2 board states + 1 player state
-        0: black current
-        1: white current
-        2-5: black past 1-4 moves
-        6-9: white past 1-4 moves
+        0-4: black current and past moves
+        5-9: white current and past moves
         10: player bit
     */
     bundle_t bundle;
@@ -42,9 +46,10 @@ public:
     // returns output
     bundle_t* get_output(void);
 
+    player_t get_next_player(void);
+
     // ---- debugging functions below ----
 
-    player_t get_next_player(void);
     void printboard(const board_t& board);
     board_t* get_curr_board_black(void);
     board_t* get_curr_board_white(void);

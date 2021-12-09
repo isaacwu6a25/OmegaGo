@@ -1,4 +1,4 @@
-// my_program.cpp
+// main.cpp
 #include <iostream>
 #include "gamestate.h"
 

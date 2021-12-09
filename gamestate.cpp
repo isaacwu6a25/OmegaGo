@@ -29,13 +29,12 @@ void GameState::reset_board(board_t& board) {
     board.fill(EMPTY);
 }
 
-/* everything below this is for debugging --------------------- */
-
-
 // returns player of next turn
 player_t GameState::get_next_player(void) {
     return bundle[OUTPUT_SIZE-1][0];
 }
+
+/* everything below this is for debugging --------------------- */
 
 // prints board
 void GameState::printboard(const board_t& board) {
@@ -52,5 +51,5 @@ board_t* GameState::get_curr_board_black(void) {
     return &bundle[BLACK];
 }
 board_t* GameState::get_curr_board_white(void) {
-    return &bundle[WHITE];
+    return &bundle[WHITE+READ_BACK];
 }
