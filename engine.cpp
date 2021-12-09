@@ -1,7 +1,6 @@
 // engine.cpp
 
 #include <iostream>
-#include "definitions.h"
 #include "engine.h"
 #include "gamestate.h"
 
@@ -51,7 +50,7 @@ state_ptr GameEngine::gen_new_state(state_ptr game_state,
 /* RULES------------------------------------------------------- */
 // test if move is on board and not overlapping stones
 bool GameEngine::valid_without_rules(state_ptr game_state, 
-                                    move_t move) {
+                                  move_t move) {
     // test if move is on board
     if (move < 0 || move >= TOTAL_SIZE) {
         return false;

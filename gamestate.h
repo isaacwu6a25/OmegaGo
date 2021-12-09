@@ -3,7 +3,6 @@
 
 #include <array>
 #include <vector>
-#include "definitions.h"
 
 //board #defines
 #define BOARD_SIZE  19

@@ -3,7 +3,6 @@
 
 #include <array>
 #include <vector>
-#include "definitions.h"
 #include "gamestate.h"
 
 typedef std::shared_ptr<GameState> state_ptr;
