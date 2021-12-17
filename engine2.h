@@ -1,4 +1,4 @@
-// engine version 2
+// engine version 2 header
 #pragma once
 
 #include <array>
@@ -37,7 +37,11 @@ class GameEngine {
     player_t next_player(const qstate_t &qstate);
 
     // rules
-    int count_chi(const qstate_t &qstate, move_t move);
+    int count_chi(const board_t &self, const board_t &opp, 
+                        board_t & stone_map, move_t move);
+    void gen_chi_grp_maps(const board_t &self, const board_t &opp, 
+                move_t move, board_t &chi_map, board_t &stone_map);
+    void remove_stones(board_t &board, const board_t &stone_map);
 
     // search map
     void fill_search_map(void);
@@ -51,12 +55,12 @@ public:
     qstate_ptr get_new_qstate(move_t move, 
                     const qstate_t &qstate);
 
-    // create the rule filter
-    void get_rule_filter(const qstate_t &qstate, 
-                                board_t &filter);
+    // checks validity of proposed move
+    bool is_valid(const qstate_t &qstate, move_t move);
 
     // for debugging
     const std::vector<qstate_ptr> &get_game_hist(void);
+    const qstate_t &get_curr_qstate(void);
     void print_qstate(const qstate_t &qstate);
     void print_board(const board_t &board);
 };
