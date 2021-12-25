@@ -7,16 +7,25 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
     GameEngine game(0);
-    // game.print_qstate(*(game.get_game_hist()[0]));
-
-    qstate_ptr new_state1, new_state2, new_state3, new_state4;
-    new_state1 = game.get_new_qstate(39, game.get_curr_qstate());
+    qstate_ptr new_qstate1, new_qstate2, new_qstate3, new_qstate4;
     
-    // game.print_qstate(*new_state1);
-    new_state2 = game.get_new_qstate(1, *new_state1);
-    new_state3 = game.get_new_qstate(21, *new_state2);
-    new_state4 = game.get_new_qstate(60, *new_state3);
-    game.print_qstate(*new_state4);
-    game.is_valid(*new_state4, 40);
+    game.set_move(1, BLACK);
+    game.set_move(3, BLACK);
+    game.set_move(20, WHITE);
+    game.set_move(22, WHITE);
+    game.set_move(40, WHITE);
+    game.set_move(21, BLACK);
+    game.print_qstate(game.get_curr_qstate());
+    new_qstate1 = game.get_new_qstate(2, game.get_curr_qstate());
+    new_qstate2 = game.get_new_qstate(300, *new_qstate1);
+    new_qstate3 = game.get_new_qstate(320, *new_qstate2);
+    new_qstate4 = game.get_new_qstate(21, *new_qstate3);
+
+    if (new_qstate4 != nullptr) {
+        game.print_qstate(*new_qstate4);
+    } else {
+        cout << "move is invalid" <<  endl;
+    }
+
     return 0;
 }

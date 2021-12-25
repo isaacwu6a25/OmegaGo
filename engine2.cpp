@@ -6,21 +6,87 @@
 using std::cout;
 using std::endl;
 
-// constructor
-GameEngine::GameEngine(int komi) {
+
+// constructor for GameState
+GameState::GameState(qstate_ptr qstate) {
+    this_qstate = qstate;
+
+    // count pieces
+    black_num = count_pieces((*qstate)[0]);
+    white_num = count_pieces((*qstate)[READ_BACK + 1]);
+}
+
+// count pieces (obviously)
+int GameState::count_pieces(const board_t &board) {
+    int count = 0;
+    for (auto it = board.begin(); it != board.end(); it++) {
+        count += *it;
+    }
+    return count;
+}
+
+// constructor for GameEngine
+GameEngine::GameEngine(int handicap) {
 
     fill_search_map();
-    if (komi == 0) {
+    if (handicap == 0) {
         qstate_ptr init_qstate(new qstate_t);
         game_hist.push_back(init_qstate);
     } else {
-        cout << "Non-zero komi is not supported." << endl;
+        cout << "Non-zero handicap is not supported." << endl;
     }
 }
 
-// advance to new state: WARNING -- implements no checks
+/*  Takes the proposed move and the current qstate as
+    arguments.
+    If move is valid, returns a pointer to the new qstate.
+    If move is invalid, returns nullptr.
+*/
 qstate_ptr GameEngine::get_new_qstate(move_t move, 
                             const qstate_t &qstate) {
+
+    player_t player = next_player(qstate);
+
+    // create new board states
+    board_t new_self, new_opp;
+
+    // perform check if not PASS
+    if (move != PASS) {
+
+        // overlapping stone check
+        if (qstate[0][move] == NEMPTY || 
+            qstate[READ_BACK + 1][move] == NEMPTY) {
+            return nullptr;
+        }
+
+        // assign self and opp boards
+        if (player == BLACK) {
+            new_self = qstate[0]; new_opp = qstate[READ_BACK + 1];
+        } else {
+            new_self = qstate[READ_BACK + 1]; new_opp = qstate[0];
+        }
+        new_self[move] = NEMPTY;
+
+        // liberty check
+        if (!chi_rules(new_self, new_opp, move)) {
+            return nullptr;
+        }
+
+        // KO check
+        if (!ko_rules(new_self, new_opp, move, qstate)) {
+            return nullptr;
+        }
+    } 
+    // no checks required for PASS
+    else {
+        // assign self and opp boards
+        if (player == BLACK) {
+            new_self = qstate[0]; new_opp = qstate[READ_BACK + 1];
+        } else {
+            new_self = qstate[READ_BACK + 1]; new_opp = qstate[0];
+        }
+    }
+
     // create a new state
     qstate_ptr new_qstate(new qstate_t);
 
@@ -32,57 +98,38 @@ qstate_ptr GameEngine::get_new_qstate(move_t move,
         (*new_qstate)[n + READ_BACK + 1] = qstate[n + READ_BACK];
     }
 
-    // copy old state and make the move
-    player_t player;
-    (*new_qstate)[0] = qstate[0]; 
-    (*new_qstate)[READ_BACK + 1] = qstate[READ_BACK + 1];
-    if (move != PASS) {
-        if ((player = next_player(qstate)) == BLACK) {
-            (*new_qstate)[0][move] = NEMPTY;
-        } else {
-            (*new_qstate)[READ_BACK + 1][move] = NEMPTY;
-        }
-
-        // TODO:: remove dead stones
-        
-        // update next player
-        (*new_qstate)[NNI_LAYERS - 1].fill(!player);
+    // copy advanced board into new state
+    if (player == BLACK) {
+        (*new_qstate)[0] = new_self; 
+        (*new_qstate)[READ_BACK + 1] = new_opp;
+    } else {
+        (*new_qstate)[0] = new_opp; 
+        (*new_qstate)[READ_BACK + 1] = new_self;
     }
+
+    // update next player
+    (*new_qstate)[NNI_LAYERS - 1].fill(!player);
 
     return new_qstate;
 }
 
-// checks validity of proposed move
-bool GameEngine::is_valid(const qstate_t &qstate, move_t move) {
-    
-    board_t new_self, new_opp;
+/*  Takes in the new board states self and opp, as
+    as well as the proposed move as arguments.
+    Checks the validity of the move in terms of 
+    liberties.
+    Removes dead stones from new_opp in the process.
+*/
+bool GameEngine::chi_rules(board_t &new_self, 
+                            board_t &new_opp, move_t move) {
 
-    // PASS check
-    if (move == PASS) {
-        return true;
-    }
-
-    // overlapping stone check
-    if (qstate[0][move] == NEMPTY || 
-        qstate[READ_BACK + 1][move] == NEMPTY) {
-        return false;
-    }
-
-    // liberty check
-    move_t test_move; 
-    bool valid = false;     // track validity in this section
+    move_t test_move;
     board_t stone_map;
-
-    if (next_player(qstate) == BLACK) {
-        new_self = qstate[0]; new_opp = qstate[READ_BACK + 1];
-    } else {
-        new_self = qstate[READ_BACK + 1]; new_opp = qstate[0];
-    }
-    new_self[move] = NEMPTY;
+    bool valid = false;
 
     // search opposing groups first
     for (int i = 0; i < CROSS_NUM; i++) {
         test_move = move + search_map[move][i];
+
         // continue if space empty
         if (new_self[test_move] == EMPTY && 
             new_opp[test_move]  == EMPTY) {
@@ -110,8 +157,6 @@ bool GameEngine::is_valid(const qstate_t &qstate, move_t move) {
         new_opp, stone_map, move) == 0) {
         return false;
     }
-
-    // KO check -- TODOOO
 
     // passed all checks
     return true;
@@ -187,6 +232,34 @@ void GameEngine::remove_stones(board_t &board, const board_t &stone_map) {
     }
 }
 
+/*  Takes the updated board states (current player and
+    opponent) as well as curr qstate as arguments.
+    Returns whether the proposed move satisfies ko-rules.
+    Note: Only checks for repeats in the current qstate.
+*/
+bool GameEngine::ko_rules(board_t &new_self, board_t &new_opp, 
+                        move_t move, const qstate_t &qstate) {
+    // differentiate black and white turns
+    if (next_player(qstate) == BLACK) {
+        for (int i = 0; i < READ_BACK; i++) {
+            if (qstate[i + 1][move]       == NEMPTY   &&
+                qstate[i + 1]             == new_self && 
+                qstate[READ_BACK + i + 2] == new_opp) {
+                    return false;
+            }
+        }
+    } else {
+        for (int i = 0; i < READ_BACK; i++) {
+            if (qstate[READ_BACK + i + 2][move] == NEMPTY   &&
+                qstate[READ_BACK + i + 2]       == new_self && 
+                qstate[i + 1]                   == new_opp) {
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
 // gets the player for next turn
 player_t GameEngine::next_player(const qstate_t &qstate) {
     return qstate[NNI_LAYERS - 1][0];
@@ -219,7 +292,8 @@ void GameEngine::fill_search_map(void) {
 
 // for debugging ---------------------------------------------------
 void GameEngine::print_qstate(const qstate_t &qstate) {
-    for (int n = 0; n < NNI_LAYERS; n++) {
+    cout << "BEGIN QSTATE" << endl;
+    for (int n = NNI_LAYERS - 1; n >= 0; n--) {
         cout << "L" << n << ": ";
         if (n < 5) {
             cout << "BLACK PAST MOVE " << n + 1 << endl;
@@ -230,6 +304,7 @@ void GameEngine::print_qstate(const qstate_t &qstate) {
         }
         print_board(qstate[n]);
     }
+    cout << "END QSTATE\n" << endl;
 }
 
 void GameEngine::print_board(const board_t &board) {
@@ -241,10 +316,24 @@ void GameEngine::print_board(const board_t &board) {
     }
 }
 
+void GameEngine::set_move(move_t move, player_t player) {
+    // assume the move is valid and not pass
+    if (player == BLACK) {
+        get_curr_qstate()[0][move] = NEMPTY;
+    } else {
+        get_curr_qstate()[READ_BACK + 1][move] = NEMPTY;
+    }
+    set_player(!player);
+}
+
+void GameEngine::set_player(player_t player) {
+    get_curr_qstate()[NNI_LAYERS - 1].fill(player);
+}
+
 const std::vector<qstate_ptr> &GameEngine::get_game_hist(void) {
     return game_hist;
 }
 
-const qstate_t &GameEngine::get_curr_qstate(void) {
-    return *(game_hist[0]);
+qstate_t &GameEngine::get_curr_qstate(void) {
+    return **(game_hist.end() - 1);
 }
