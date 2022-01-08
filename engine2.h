@@ -36,11 +36,11 @@ class GameState {
     qstate_ptr this_qstate;
 
     // constructor
-    GameState(qstate_ptr qstate);
+    GameState(const qstate_ptr &qstate);
     int count_pieces(const board_t &board);
 
-    // comparison
-    bool operator==(const GameState &gamestate);
+    // overloaded comparison
+    bool operator == (const GameState &rhs);
 
     // the game can access everything within gamestate
     friend class GameEngine;
@@ -50,7 +50,7 @@ class GameState {
 class GameEngine {
 
     // the history of the current game
-    std::vector<qstate_ptr> game_hist;
+    std::vector<GameState> game_hist;
 
     // gets the player for next turn
     player_t next_player(const qstate_t &qstate);
@@ -77,10 +77,10 @@ public:
 
     // advance to new state
     qstate_ptr get_new_qstate(move_t move, const qstate_t &qstate);
-    void push_new_qstate(const qstate_ptr qstate);
+    int push_new_qstate(const qstate_ptr &qstate);
 
     // for debugging
-    const std::vector<qstate_ptr> &get_game_hist(void);
+    const std::vector<GameState> &get_game_hist(void);
     qstate_t &get_curr_qstate(void);
     void set_move(move_t move, player_t player);
     void set_player(player_t player);

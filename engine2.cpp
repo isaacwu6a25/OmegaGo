@@ -8,12 +8,22 @@ using std::endl;
 
 
 // constructor for GameState
-GameState::GameState(qstate_ptr qstate) {
+GameState::GameState(const qstate_ptr &qstate) {
     this_qstate = qstate;
 
     // count pieces
     black_num = count_pieces((*qstate)[0]);
     white_num = count_pieces((*qstate)[READ_BACK + 1]);
+}
+
+// overloading comparison
+bool GameState::operator == (const GameState &rhs) {
+    // check piece numbers first
+    return (black_num == rhs.black_num &&
+            white_num == rhs.white_num &&
+            (*this_qstate)[0] == (*rhs.this_qstate)[0] &&
+            (*this_qstate)[READ_BACK + 1]
+                    == (*rhs.this_qstate)[READ_BACK + 1]);
 }
 
 // count pieces (obviously)
@@ -28,13 +38,34 @@ int GameState::count_pieces(const board_t &board) {
 // constructor for GameEngine
 GameEngine::GameEngine(int handicap) {
 
+    // set up the env
     fill_search_map();
+
+    // no handicap yet
     if (handicap == 0) {
         qstate_ptr init_qstate(new qstate_t);
-        game_hist.push_back(init_qstate);
+        game_hist.emplace_back(init_qstate);
     } else {
         cout << "Non-zero handicap is not supported." << endl;
     }
+}
+
+/*  Takes the proposed new qstate as the argument.
+    Checks whether it repeats with any previous qstate.
+    If valid, adds it to game history.
+*/
+int GameEngine::push_new_qstate(const qstate_ptr &qstate) {
+    
+    GameState new_game_state(qstate);
+    // test for repeat states
+    for (auto it = game_hist.begin(); it != game_hist.end(); it++) {
+        if (*it == new_game_state) {
+            return false;
+        }
+    }
+    // add to game hist
+    game_hist.push_back(std::move(new_game_state));
+    return true;
 }
 
 /*  Takes the proposed move and the current qstate as
@@ -330,10 +361,10 @@ void GameEngine::set_player(player_t player) {
     get_curr_qstate()[NNI_LAYERS - 1].fill(player);
 }
 
-const std::vector<qstate_ptr> &GameEngine::get_game_hist(void) {
+const std::vector<GameState> &GameEngine::get_game_hist(void) {
     return game_hist;
 }
 
 qstate_t &GameEngine::get_curr_qstate(void) {
-    return **(game_hist.end() - 1);
+    return *((game_hist.end() - 1)->this_qstate);
 }
