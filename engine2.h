@@ -5,30 +5,33 @@
 #include <vector>
 #include <memory>
 
-#define BLACK           false
-#define WHITE           true
-#define EMPTY           false
-#define NEMPTY          true
-#define BOARD_SIZE      19
-#define TOTAL_SIZE      BOARD_SIZE * BOARD_SIZE
-#define PASS            -1
+#define BLACK false
+#define WHITE true
+#define EMPTY false
+#define NEMPTY true
+#define BOARD_SIZE 19
+#define TOTAL_SIZE BOARD_SIZE *BOARD_SIZE
+#define PASS -1
 
-#define LEGAL           true
-#define NLEGAL          false
-#define CROSS_NUM       4
-#define READ_BACK       4
-#define NNI_LAYERS      (READ_BACK + 1) * 2 + 1
+#define LEGAL true
+#define NLEGAL false
+#define CROSS_NUM 4
+#define READ_BACK 4
+#define NNI_LAYERS (READ_BACK + 1) * 2 + 1
 
-typedef bool                            player_t;
-typedef int                             move_t;
-typedef std::array<bool, TOTAL_SIZE>    board_t;
-typedef std::array<std::array<int, 
-            CROSS_NUM>, TOTAL_SIZE>     search_t;
+typedef bool player_t;
+typedef int move_t;
+typedef std::array<bool, TOTAL_SIZE> board_t;
+typedef std::array<std::array<int,
+                              CROSS_NUM>,
+                   TOTAL_SIZE>
+    search_t;
 
 typedef std::array<board_t, NNI_LAYERS> qstate_t;
-typedef std::shared_ptr<qstate_t>       qstate_ptr;
+typedef std::shared_ptr<qstate_t> qstate_ptr;
 
-class GameState {
+class GameState
+{
     // piece numbers
     int white_num, black_num;
 
@@ -40,14 +43,14 @@ class GameState {
     int count_pieces(const board_t &board);
 
     // overloaded comparison
-    bool operator == (const GameState &rhs);
+    bool operator==(const GameState &rhs);
 
     // the game can access everything within gamestate
     friend class GameEngine;
 };
 
-
-class GameEngine {
+class GameEngine
+{
 
     // the history of the current game
     std::vector<GameState> game_hist;
@@ -57,15 +60,15 @@ class GameEngine {
 
     // for checking liberty requirements
     bool chi_rules(board_t &new_self, board_t &new_opp, move_t move);
-    int count_chi(const board_t &self, const board_t &opp, 
-                        board_t & stone_map, move_t move);
-    void gen_chi_grp_maps(const board_t &self, const board_t &opp, 
-                move_t move, board_t &chi_map, board_t &stone_map);
+    int count_chi(const board_t &self, const board_t &opp,
+                  board_t &stone_map, move_t move);
+    void gen_chi_grp_maps(const board_t &self, const board_t &opp,
+                          move_t move, board_t &chi_map, board_t &stone_map);
     void remove_stones(board_t &board, const board_t &stone_map);
 
     // for checking KO requiremnts
-    bool ko_rules(board_t &new_self, board_t &new_opp, 
-                move_t move, const qstate_t &qstate);
+    bool ko_rules(board_t &new_self, board_t &new_opp,
+                  move_t move, const qstate_t &qstate);
 
     // search map
     void fill_search_map(void);
@@ -87,4 +90,3 @@ public:
     void print_qstate(const qstate_t &qstate);
     void print_board(const board_t &board);
 };
-
