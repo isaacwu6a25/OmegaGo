@@ -2,11 +2,11 @@
 #include <iostream>
 #include "engine2.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main(int argc, char *argv[])
 {
-
     GameEngine game(0);
     qstate_ptr new_qstate1, new_qstate2, new_qstate3, new_qstate4;
 

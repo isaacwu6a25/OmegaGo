@@ -17,7 +17,9 @@ GameState::GameState(const qstate_ptr &qstate)
     white_num = count_pieces((*qstate)[READ_BACK + 1]);
 }
 
-// overloading comparison
+/*  Overloaded comparison operator, only checks the
+    current state of the board, not the entire qstate.
+*/
 bool GameState::operator==(const GameState &rhs)
 {
     // check piece numbers first

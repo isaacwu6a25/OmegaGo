@@ -5,6 +5,10 @@
 #include <vector>
 #include <memory>
 
+using std::array;
+using std::shared_ptr;
+using std::vector;
+
 #define BLACK false
 #define WHITE true
 #define EMPTY false
@@ -21,14 +25,11 @@
 
 typedef bool player_t;
 typedef int move_t;
-typedef std::array<bool, TOTAL_SIZE> board_t;
-typedef std::array<std::array<int,
-                              CROSS_NUM>,
-                   TOTAL_SIZE>
-    search_t;
+typedef array<bool, TOTAL_SIZE> board_t;
+typedef array<array<int, CROSS_NUM>, TOTAL_SIZE> search_t;
 
-typedef std::array<board_t, NNI_LAYERS> qstate_t;
-typedef std::shared_ptr<qstate_t> qstate_ptr;
+typedef array<board_t, NNI_LAYERS> qstate_t;
+typedef shared_ptr<qstate_t> qstate_ptr;
 
 class GameState
 {
@@ -51,9 +52,8 @@ class GameState
 
 class GameEngine
 {
-
     // the history of the current game
-    std::vector<GameState> game_hist;
+    vector<GameState> game_hist;
 
     // gets the player for next turn
     player_t next_player(const qstate_t &qstate);
@@ -83,7 +83,7 @@ public:
     int push_new_qstate(const qstate_ptr &qstate);
 
     // for debugging
-    const std::vector<GameState> &get_game_hist(void);
+    const vector<GameState> &get_game_hist(void);
     qstate_t &get_curr_qstate(void);
     void set_move(move_t move, player_t player);
     void set_player(player_t player);
