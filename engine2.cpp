@@ -50,8 +50,8 @@ GameEngine::GameEngine(int handicap)
     // no handicap yet
     if (handicap == 0)
     {
-        qstate_ptr init_qstate(new qstate_t());
-        // auto init_qstate = std::make_shared<qstate_t>;
+        // qstate_ptr init_qstate(new qstate_t());
+        auto init_qstate = std::make_shared<qstate_t>();
         game_hist.emplace_back(GameState(init_qstate));
     }
     else
@@ -146,7 +146,7 @@ qstate_ptr GameEngine::get_new_qstate(move_t move,
     }
 
     // create a new state
-    qstate_ptr new_qstate(new qstate_t);
+    auto new_qstate = std::make_shared<qstate_t>();
 
     // push back past moves
     for (int n = READ_BACK; n > 0; n--)
