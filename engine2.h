@@ -21,7 +21,7 @@ using std::vector;
 #define NLEGAL false
 #define CROSS_NUM 4
 #define READ_BACK 4
-#define NNI_LAYERS (READ_BACK + 1) * 2 + 1
+#define NNI_LAYERS ((READ_BACK + 1) * 2 + 1)
 
 typedef bool player_t;
 typedef int move_t;
@@ -82,9 +82,11 @@ public:
     qstate_ptr get_new_qstate(move_t move, const qstate_t &qstate);
     int push_new_qstate(const qstate_ptr &qstate);
 
-    // for debugging
+    // utility functions
     const vector<GameState> &get_game_hist(void);
     qstate_t &get_curr_qstate(void);
+
+    // for debugging
     void set_move(move_t move, player_t player);
     void set_player(player_t player);
     void print_qstate(const qstate_t &qstate);

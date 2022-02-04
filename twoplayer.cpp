@@ -9,14 +9,13 @@
 
 #include "engine2.h"
 #include "shader.h"
-// #include "line.h"
 #include "board_gui.h"
 
-int initGUI(const unsigned int width, const unsigned int height,
-            const char *name, GLFWwindow *(&window));
+int initGUI(GLFWwindow *(&window), const unsigned int width, const unsigned int height);
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
-void renderBoard(void);
+void window_size_callback(GLFWwindow *window, int width, int height);
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 // window settings
 const unsigned int SCR_WIDTH = 700;
@@ -26,26 +25,19 @@ const unsigned int SCR_HEIGHT = 700;
 // -------------------------------------------------------------------------
 int main(void)
 {
-    int width, height;
     GLFWwindow *window;
-    if (!initGUI(SCR_WIDTH, SCR_HEIGHT, "test", window))
+    if (!initGUI(window, SCR_WIDTH, SCR_HEIGHT))
         return -1;
 
-    // Line line(glm::vec3(0.5f, 0.5f, 0.0f), glm::vec3(-0.5f, -0.5f, 0.0f));
-    BoardGUI board_gui;
+    BoardGUI board_gui(SCR_WIDTH, SCR_HEIGHT);
+    glfwSetWindowUserPointer(window, &board_gui);
 
     // render loop
     // -----------------------------------------------
     while (!glfwWindowShouldClose(window))
     {
-        // input
-        processInput(window);
+        board_gui.render();
 
-        // rendering
-        glfwGetWindowSize(window, &width, &height);
-        board_gui.draw(width, height);
-
-        // swap buffers and poll IO events
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -55,20 +47,52 @@ int main(void)
     return 0;
 }
 
-// process inputs
+// callback for mouse input
 // -------------------------------------------------------------------------
-void processInput(GLFWwindow *window)
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-    // query GLFW for key presses
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        // get mouse position
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        // pass mouse pos to board_gui
+        BoardGUI *board_gui = (BoardGUI *)glfwGetWindowUserPointer(window);
+        board_gui->setMousePress(xpos, ypos);
+    }
+}
+
+// callback for framebuffer resize (by OS or user)
+// -------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+    // setting viewport maps width and height to correct screen coordinates
+    glViewport(0, 0, width, height);
+}
+
+// callback for window resize (by OS or user)
+// -------------------------------------------------------------------------
+void window_size_callback(GLFWwindow *window, int width, int height)
+{
+    // pass width and height to board_gui
+    BoardGUI *board_gui = (BoardGUI *)glfwGetWindowUserPointer(window);
+    board_gui->setWinDim(width, height);
+}
+
+// callback for key input
+// -------------------------------------------------------------------------
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    // close window on spacebar
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
 
 // Initiate the GUI, including the GLFW library, GLAD library
 // and the window. Returns 1 if successful and 0 otherwise.
 // -------------------------------------------------------------------------
-int initGUI(const unsigned int width, const unsigned int height,
-            const char *name, GLFWwindow *(&window))
+int initGUI(GLFWwindow *(&window), const unsigned int width, const unsigned int height)
 {
     // Initiate and configure GLFW library: Handles window creation
     // and destruction. Abstracts away OS specific operations.
@@ -88,7 +112,7 @@ int initGUI(const unsigned int width, const unsigned int height,
 
     // glfw window creation
     // ---------------------------------------------------------------
-    window = glfwCreateWindow(width, height, name, NULL, NULL);
+    window = glfwCreateWindow(width, height, "test", NULL, NULL);
     if (window == NULL)
     {
         std::cerr << "ERROR: Failed to create GLFW window" << std::endl;
@@ -96,7 +120,13 @@ int initGUI(const unsigned int width, const unsigned int height,
         return 0;
     }
     glfwMakeContextCurrent(window);
+
+    // set callback functions
+    // ---------------------------------------------------------------
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetWindowSizeCallback(window, window_size_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetKeyCallback(window, key_callback);
 
     // Initiate GLAD library: Retrieves functions from the
     // OpenGL library for use directly without declaration.
@@ -111,17 +141,8 @@ int initGUI(const unsigned int width, const unsigned int height,
     // ---------------------------------------------------------------
     const GLubyte *renderer = glGetString(GL_RENDERER);
     const GLubyte *version = glGetString(GL_VERSION);
-    std::cout << "Renderer: " << renderer << std::endl;
-    std::cout << "OpenGL version supported " << version << std::endl;
+    std::cout << "\nRenderer: " << renderer << std::endl;
+    std::cout << "OpenGL version supported " << version << "\n"
+              << std::endl;
     return 1;
-}
-
-//  callback function is called whenever window is resized (by OS or user)
-// -------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
-    // Processed coordinates in OpenGL are in (-1, 1), setting
-    // viewport maps these values to correct screen coordinates.
-    // ---------------------------------
-    glViewport(0, 0, width, height);
 }

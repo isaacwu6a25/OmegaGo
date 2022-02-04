@@ -50,7 +50,8 @@ GameEngine::GameEngine(int handicap)
     // no handicap yet
     if (handicap == 0)
     {
-        qstate_ptr init_qstate(new qstate_t);
+        qstate_ptr init_qstate(new qstate_t());
+        // auto init_qstate = std::make_shared<qstate_t>;
         game_hist.emplace_back(GameState(init_qstate));
     }
     else
@@ -67,13 +68,14 @@ int GameEngine::push_new_qstate(const qstate_ptr &qstate)
 {
     GameState new_game_state(qstate);
     // test for repeat states
-    for (auto it = game_hist.begin(); it != game_hist.end(); it++)
-    {
-        if (*it == new_game_state)
-        {
-            return false;
-        }
-    }
+    // TODOOOOO
+    // for (auto it = game_hist.begin(); it != game_hist.end(); it++)
+    // {
+    //     if (*it == new_game_state)
+    //     {
+    //         return false;
+    //     }
+    // }
     // add to game hist
     game_hist.emplace_back(new_game_state);
     return true;
@@ -383,6 +385,18 @@ void GameEngine::fill_search_map(void)
     }
 }
 
+// utility functions
+// -----------------------------------------------------------------
+const std::vector<GameState> &GameEngine::get_game_hist(void)
+{
+    return game_hist;
+}
+
+qstate_t &GameEngine::get_curr_qstate(void)
+{
+    return *((game_hist.end() - 1)->this_qstate);
+}
+
 // for debugging ---------------------------------------------------
 void GameEngine::print_qstate(const qstate_t &qstate)
 {
@@ -437,14 +451,4 @@ void GameEngine::set_move(move_t move, player_t player)
 void GameEngine::set_player(player_t player)
 {
     get_curr_qstate()[NNI_LAYERS - 1].fill(player);
-}
-
-const std::vector<GameState> &GameEngine::get_game_hist(void)
-{
-    return game_hist;
-}
-
-qstate_t &GameEngine::get_curr_qstate(void)
-{
-    return *((game_hist.end() - 1)->this_qstate);
 }
