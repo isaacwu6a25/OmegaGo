@@ -81,6 +81,17 @@ int GameEngine::push_new_qstate(const qstate_ptr &qstate)
     return true;
 }
 
+// redo move
+int GameEngine::cancel_last_qstate()
+{
+    if (game_hist.size() > 1)
+    {
+        game_hist.pop_back();
+        return true;
+    }
+    return false;
+}
+
 /*  Takes the proposed move and the current qstate as
     arguments.
     If move is valid, returns a pointer to the new qstate.

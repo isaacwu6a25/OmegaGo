@@ -87,6 +87,14 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
     // close window on spacebar
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    // redo move on backspace
+    if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS)
+    {
+        // tell gui to cancel last move
+        BoardGUI *board_gui = (BoardGUI *)glfwGetWindowUserPointer(window);
+        board_gui->setCancelLastMove();
+    }
 }
 
 // Initiate the GUI, including the GLFW library, GLAD library

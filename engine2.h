@@ -81,6 +81,7 @@ public:
     // advance to new state
     qstate_ptr get_new_qstate(move_t move, const qstate_t &qstate);
     int push_new_qstate(const qstate_ptr &qstate);
+    int cancel_last_qstate();
 
     // utility functions
     const vector<GameState> &get_game_hist(void);

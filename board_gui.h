@@ -128,7 +128,7 @@ class BoardGUI
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
         glEnableVertexAttribArray(0);
 
-        // stones
+        // circles (stones and star points)
         glGenVertexArrays(1, &cVAO);
         glBindVertexArray(cVAO);
 
@@ -166,6 +166,7 @@ class BoardGUI
     {
         glBindVertexArray(cVAO);
         glEnable(GL_LINE_SMOOTH);
+        shaderProgram.setMat4("transform", board_scaling);
 
         for (int n = 0; n != TOTAL_SIZE; n++)
         {
@@ -177,7 +178,6 @@ class BoardGUI
                 glm::vec2 move_vec((double)move_x / 9, -(double)move_y / 9);
                 shaderProgram.setVec3("color", blackColor);
                 shaderProgram.setVec2("stranslate", move_vec);
-                shaderProgram.setMat4("transform", board_scaling);
                 glDrawElements(GL_TRIANGLES, 3 * CIRC_NGON, GL_UNSIGNED_INT, (void *)0);
             }
             // white
@@ -188,7 +188,6 @@ class BoardGUI
                 glm::vec2 move_vec((double)move_x / 9, -(double)move_y / 9);
                 shaderProgram.setVec3("color", whiteColor);
                 shaderProgram.setVec2("stranslate", move_vec);
-                shaderProgram.setMat4("transform", board_scaling);
                 glDrawElements(GL_TRIANGLES, 3 * CIRC_NGON, GL_UNSIGNED_INT, (void *)0);
             }
         }
@@ -202,7 +201,7 @@ public:
         setWinDim(width, height);
 
         // colors
-        backColor = glm::vec3(0.6f, 0.5f, 0.4f);
+        backColor = glm::vec3(0.7f, 0.6f, 0.5f);
         lineColor = glm::vec3(0.0f, 0.0f, 0.0f);
         blackColor = glm::vec3(0.1f, 0.1f, 0.1f);
         whiteColor = glm::vec3(0.9f, 0.9f, 0.9f);
@@ -246,6 +245,15 @@ public:
         if (new_qstate == nullptr || !go_game.push_new_qstate(new_qstate))
         {
             std::cout << "Invalid move!" << std::endl;
+            return;
+        }
+        UPDATE_GUI = true;
+    }
+    void setCancelLastMove()
+    {
+        if (!go_game.cancel_last_qstate())
+        {
+            std::cout << "Cancel failed: Game start reached." << std::endl;
             return;
         }
         UPDATE_GUI = true;
