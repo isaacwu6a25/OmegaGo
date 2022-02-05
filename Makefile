@@ -1,4 +1,3 @@
-
 CXX=g++
 CPPFLAGS=-std=c++17 -Wall
 
@@ -10,6 +9,3 @@ twoplayer.o: twoplayer.cpp board_gui.h
 
 engine2.o: engine2.cpp engine2.h
 	${CXX} ${CPPFLAGS} engine2.cpp -c
-
-# twoplayer: twoplayer.cpp line.h
-# 	${CXX} ${CPPFLAGS} twoplayer.cpp glad.c -o twoplayer -lglfw -framework OpenGl
