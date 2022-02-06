@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libGlad.a CMakeFiles/Glad.dir/glad.c.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libGlad.a

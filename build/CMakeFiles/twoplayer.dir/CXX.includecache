@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/isaacwu/Documents/GitHub/OmegaGo/twoplayer.cpp
+glad/glad.h
+-
+GLFW/glfw3.h
+-
+iostream
+-
+string
+-
+board_gui.h
+/Users/isaacwu/Documents/GitHub/OmegaGo/board_gui.h
+

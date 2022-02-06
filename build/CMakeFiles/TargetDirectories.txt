@@ -1,0 +1,6 @@
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles/rebuild_cache.dir
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles/edit_cache.dir
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles/twoplayer.dir
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glad/CMakeFiles/rebuild_cache.dir
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glad/CMakeFiles/edit_cache.dir
+/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glad/CMakeFiles/Glad.dir

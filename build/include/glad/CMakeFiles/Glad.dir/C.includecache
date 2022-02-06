@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/isaacwu/Documents/GitHub/OmegaGo/include/glad/glad.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+glad.h
+/Users/isaacwu/Documents/GitHub/OmegaGo/include/glad/glad.h
+windows.h
+-
+winapifamily.h
+-
+dlfcn.h
+-
+
+/Users/isaacwu/Documents/GitHub/OmegaGo/include/glad/glad.h
+KHR/khrplatform.h
+-
+
