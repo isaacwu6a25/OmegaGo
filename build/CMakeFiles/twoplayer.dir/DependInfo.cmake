@@ -11,12 +11,12 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "."
-  "../include/**"
+  "../include/glad"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glad/CMakeFiles/Glad.dir/DependInfo.cmake"
+  "/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glfw-3.3.6/include/CMakeFiles/Glad.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

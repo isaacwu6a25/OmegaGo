@@ -65,6 +65,7 @@
         "deque": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "khrplatform.h": "c"
     }
 }

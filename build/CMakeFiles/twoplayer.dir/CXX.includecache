@@ -6,11 +6,23 @@
 
 #IncludeRegexTransform: 
 
+../include/glad/KHR/khrplatform.h
+stdint.h
+-
+inttypes.h
+-
+stdint.h
+-
+
+../include/glad/glad.h
+KHR/khrplatform.h
+../include/glad/KHR/khrplatform.h
+
 /Users/isaacwu/Documents/GitHub/OmegaGo/twoplayer.cpp
-glad/glad.h
--
+glad.h
+/Users/isaacwu/Documents/GitHub/OmegaGo/glad.h
 GLFW/glfw3.h
--
+/Users/isaacwu/Documents/GitHub/OmegaGo/GLFW/glfw3.h
 iostream
 -
 string

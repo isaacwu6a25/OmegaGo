@@ -39,7 +39,10 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/isaacwu/Documents/GitHub/OmegaGo/build/include/glad/cmake_install.cmake")
+  include("/Users/isaacwu/Documents/GitHub/OmegaGo/build/engine/cmake_install.cmake")
+  include("/Users/isaacwu/Documents/GitHub/OmegaGo/build/glad/cmake_install.cmake")
+  include("/Users/isaacwu/Documents/GitHub/OmegaGo/build/glfw/cmake_install.cmake")
+  include("/Users/isaacwu/Documents/GitHub/OmegaGo/build/twoplayer/cmake_install.cmake")
 
 endif()
 

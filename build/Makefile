@@ -75,6 +75,52 @@ CMAKE_BINARY_DIR = /Users/isaacwu/Documents/GitHub/OmegaGo/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -130,17 +176,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named twoplayer
+# Target rules for targets named engine
 
 # Build rule for target.
-twoplayer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twoplayer
-.PHONY : twoplayer
+engine: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 engine
+.PHONY : engine
 
 # fast build rule for target.
-twoplayer/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/build
-.PHONY : twoplayer/fast
+engine/fast:
+	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
+.PHONY : engine/fast
 
 #=============================================================================
 # Target rules for targets named Glad
@@ -152,35 +198,60 @@ Glad: cmake_check_build_system
 
 # fast build rule for target.
 Glad/fast:
-	$(MAKE) $(MAKESILENT) -f include/glad/CMakeFiles/Glad.dir/build.make include/glad/CMakeFiles/Glad.dir/build
+	$(MAKE) $(MAKESILENT) -f glad/CMakeFiles/Glad.dir/build.make glad/CMakeFiles/Glad.dir/build
 .PHONY : Glad/fast
 
-twoplayer.o: twoplayer.cpp.o
+#=============================================================================
+# Target rules for targets named uninstall
 
-.PHONY : twoplayer.o
+# Build rule for target.
+uninstall: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 uninstall
+.PHONY : uninstall
 
-# target to build an object file
-twoplayer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/twoplayer.cpp.o
-.PHONY : twoplayer.cpp.o
+# fast build rule for target.
+uninstall/fast:
+	$(MAKE) $(MAKESILENT) -f glfw/CMakeFiles/uninstall.dir/build.make glfw/CMakeFiles/uninstall.dir/build
+.PHONY : uninstall/fast
 
-twoplayer.i: twoplayer.cpp.i
+#=============================================================================
+# Target rules for targets named update_mappings
 
-.PHONY : twoplayer.i
+# Build rule for target.
+update_mappings: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 update_mappings
+.PHONY : update_mappings
 
-# target to preprocess a source file
-twoplayer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/twoplayer.cpp.i
-.PHONY : twoplayer.cpp.i
+# fast build rule for target.
+update_mappings/fast:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/update_mappings.dir/build.make glfw/src/CMakeFiles/update_mappings.dir/build
+.PHONY : update_mappings/fast
 
-twoplayer.s: twoplayer.cpp.s
+#=============================================================================
+# Target rules for targets named glfw
 
-.PHONY : twoplayer.s
+# Build rule for target.
+glfw: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glfw
+.PHONY : glfw
 
-# target to generate assembly for a file
-twoplayer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/twoplayer.cpp.s
-.PHONY : twoplayer.cpp.s
+# fast build rule for target.
+glfw/fast:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/glfw.dir/build.make glfw/src/CMakeFiles/glfw.dir/build
+.PHONY : glfw/fast
+
+#=============================================================================
+# Target rules for targets named twoplayer
+
+# Build rule for target.
+twoplayer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twoplayer
+.PHONY : twoplayer
+
+# fast build rule for target.
+twoplayer/fast:
+	$(MAKE) $(MAKESILENT) -f twoplayer/CMakeFiles/twoplayer.dir/build.make twoplayer/CMakeFiles/twoplayer.dir/build
+.PHONY : twoplayer/fast
 
 # Help Target
 help:
@@ -189,12 +260,17 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... uninstall"
+	@echo "... update_mappings"
 	@echo "... Glad"
+	@echo "... engine"
+	@echo "... glfw"
 	@echo "... twoplayer"
-	@echo "... twoplayer.o"
-	@echo "... twoplayer.i"
-	@echo "... twoplayer.s"
 .PHONY : help
 
 

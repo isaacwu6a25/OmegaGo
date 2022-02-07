@@ -72,93 +72,284 @@ CMAKE_BINARY_DIR = /Users/isaacwu/Documents/GitHub/OmegaGo/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/twoplayer.dir/all
-all: include/glad/all
+all: engine/all
+all: glad/all
+all: glfw/all
+all: twoplayer/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: include/glad/preinstall
+preinstall: engine/preinstall
+preinstall: glad/preinstall
+preinstall: glfw/preinstall
+preinstall: twoplayer/preinstall
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/twoplayer.dir/clean
-clean: include/glad/clean
+clean: engine/clean
+clean: glad/clean
+clean: glfw/clean
+clean: twoplayer/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory include/glad
+# Directory level rules for directory engine
 
 # Recursive "all" directory target.
-include/glad/all: include/glad/CMakeFiles/Glad.dir/all
+engine/all: engine/CMakeFiles/engine.dir/all
 
-.PHONY : include/glad/all
+.PHONY : engine/all
 
 # Recursive "preinstall" directory target.
-include/glad/preinstall:
+engine/preinstall:
 
-.PHONY : include/glad/preinstall
+.PHONY : engine/preinstall
 
 # Recursive "clean" directory target.
-include/glad/clean: include/glad/CMakeFiles/Glad.dir/clean
+engine/clean: engine/CMakeFiles/engine.dir/clean
 
-.PHONY : include/glad/clean
+.PHONY : engine/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/twoplayer.dir
+# Directory level rules for directory glad
+
+# Recursive "all" directory target.
+glad/all: glad/CMakeFiles/Glad.dir/all
+
+.PHONY : glad/all
+
+# Recursive "preinstall" directory target.
+glad/preinstall:
+
+.PHONY : glad/preinstall
+
+# Recursive "clean" directory target.
+glad/clean: glad/CMakeFiles/Glad.dir/clean
+
+.PHONY : glad/clean
+
+#=============================================================================
+# Directory level rules for directory glfw
+
+# Recursive "all" directory target.
+glfw/all: glfw/src/all
+
+.PHONY : glfw/all
+
+# Recursive "preinstall" directory target.
+glfw/preinstall: glfw/src/preinstall
+
+.PHONY : glfw/preinstall
+
+# Recursive "clean" directory target.
+glfw/clean: glfw/CMakeFiles/uninstall.dir/clean
+glfw/clean: glfw/src/clean
+
+.PHONY : glfw/clean
+
+#=============================================================================
+# Directory level rules for directory glfw/src
+
+# Recursive "all" directory target.
+glfw/src/all: glfw/src/CMakeFiles/glfw.dir/all
+
+.PHONY : glfw/src/all
+
+# Recursive "preinstall" directory target.
+glfw/src/preinstall:
+
+.PHONY : glfw/src/preinstall
+
+# Recursive "clean" directory target.
+glfw/src/clean: glfw/src/CMakeFiles/update_mappings.dir/clean
+glfw/src/clean: glfw/src/CMakeFiles/glfw.dir/clean
+
+.PHONY : glfw/src/clean
+
+#=============================================================================
+# Directory level rules for directory twoplayer
+
+# Recursive "all" directory target.
+twoplayer/all: twoplayer/CMakeFiles/twoplayer.dir/all
+
+.PHONY : twoplayer/all
+
+# Recursive "preinstall" directory target.
+twoplayer/preinstall:
+
+.PHONY : twoplayer/preinstall
+
+# Recursive "clean" directory target.
+twoplayer/clean: twoplayer/CMakeFiles/twoplayer.dir/clean
+
+.PHONY : twoplayer/clean
+
+#=============================================================================
+# Target rules for target engine/CMakeFiles/engine.dir
 
 # All Build rule for target.
-CMakeFiles/twoplayer.dir/all: include/glad/CMakeFiles/Glad.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=3,4 "Built target twoplayer"
-.PHONY : CMakeFiles/twoplayer.dir/all
+engine/CMakeFiles/engine.dir/all:
+	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/depend
+	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=3,4 "Built target engine"
+.PHONY : engine/CMakeFiles/engine.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/twoplayer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/twoplayer.dir/all
+engine/CMakeFiles/engine.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 engine/CMakeFiles/engine.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
-.PHONY : CMakeFiles/twoplayer.dir/rule
+.PHONY : engine/CMakeFiles/engine.dir/rule
 
 # Convenience name for target.
-twoplayer: CMakeFiles/twoplayer.dir/rule
+engine: engine/CMakeFiles/engine.dir/rule
 
-.PHONY : twoplayer
+.PHONY : engine
 
 # clean rule for target.
-CMakeFiles/twoplayer.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/twoplayer.dir/build.make CMakeFiles/twoplayer.dir/clean
-.PHONY : CMakeFiles/twoplayer.dir/clean
+engine/CMakeFiles/engine.dir/clean:
+	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/clean
+.PHONY : engine/CMakeFiles/engine.dir/clean
 
 #=============================================================================
-# Target rules for target include/glad/CMakeFiles/Glad.dir
+# Target rules for target glad/CMakeFiles/Glad.dir
 
 # All Build rule for target.
-include/glad/CMakeFiles/Glad.dir/all:
-	$(MAKE) $(MAKESILENT) -f include/glad/CMakeFiles/Glad.dir/build.make include/glad/CMakeFiles/Glad.dir/depend
-	$(MAKE) $(MAKESILENT) -f include/glad/CMakeFiles/Glad.dir/build.make include/glad/CMakeFiles/Glad.dir/build
+glad/CMakeFiles/Glad.dir/all:
+	$(MAKE) $(MAKESILENT) -f glad/CMakeFiles/Glad.dir/build.make glad/CMakeFiles/Glad.dir/depend
+	$(MAKE) $(MAKESILENT) -f glad/CMakeFiles/Glad.dir/build.make glad/CMakeFiles/Glad.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=1,2 "Built target Glad"
-.PHONY : include/glad/CMakeFiles/Glad.dir/all
+.PHONY : glad/CMakeFiles/Glad.dir/all
 
 # Build rule for subdir invocation for target.
-include/glad/CMakeFiles/Glad.dir/rule: cmake_check_build_system
+glad/CMakeFiles/Glad.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 include/glad/CMakeFiles/Glad.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glad/CMakeFiles/Glad.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
-.PHONY : include/glad/CMakeFiles/Glad.dir/rule
+.PHONY : glad/CMakeFiles/Glad.dir/rule
 
 # Convenience name for target.
-Glad: include/glad/CMakeFiles/Glad.dir/rule
+Glad: glad/CMakeFiles/Glad.dir/rule
 
 .PHONY : Glad
 
 # clean rule for target.
-include/glad/CMakeFiles/Glad.dir/clean:
-	$(MAKE) $(MAKESILENT) -f include/glad/CMakeFiles/Glad.dir/build.make include/glad/CMakeFiles/Glad.dir/clean
-.PHONY : include/glad/CMakeFiles/Glad.dir/clean
+glad/CMakeFiles/Glad.dir/clean:
+	$(MAKE) $(MAKESILENT) -f glad/CMakeFiles/Glad.dir/build.make glad/CMakeFiles/Glad.dir/clean
+.PHONY : glad/CMakeFiles/Glad.dir/clean
+
+#=============================================================================
+# Target rules for target glfw/CMakeFiles/uninstall.dir
+
+# All Build rule for target.
+glfw/CMakeFiles/uninstall.dir/all:
+	$(MAKE) $(MAKESILENT) -f glfw/CMakeFiles/uninstall.dir/build.make glfw/CMakeFiles/uninstall.dir/depend
+	$(MAKE) $(MAKESILENT) -f glfw/CMakeFiles/uninstall.dir/build.make glfw/CMakeFiles/uninstall.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num= "Built target uninstall"
+.PHONY : glfw/CMakeFiles/uninstall.dir/all
+
+# Build rule for subdir invocation for target.
+glfw/CMakeFiles/uninstall.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glfw/CMakeFiles/uninstall.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
+.PHONY : glfw/CMakeFiles/uninstall.dir/rule
+
+# Convenience name for target.
+uninstall: glfw/CMakeFiles/uninstall.dir/rule
+
+.PHONY : uninstall
+
+# clean rule for target.
+glfw/CMakeFiles/uninstall.dir/clean:
+	$(MAKE) $(MAKESILENT) -f glfw/CMakeFiles/uninstall.dir/build.make glfw/CMakeFiles/uninstall.dir/clean
+.PHONY : glfw/CMakeFiles/uninstall.dir/clean
+
+#=============================================================================
+# Target rules for target glfw/src/CMakeFiles/update_mappings.dir
+
+# All Build rule for target.
+glfw/src/CMakeFiles/update_mappings.dir/all:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/update_mappings.dir/build.make glfw/src/CMakeFiles/update_mappings.dir/depend
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/update_mappings.dir/build.make glfw/src/CMakeFiles/update_mappings.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=23 "Built target update_mappings"
+.PHONY : glfw/src/CMakeFiles/update_mappings.dir/all
+
+# Build rule for subdir invocation for target.
+glfw/src/CMakeFiles/update_mappings.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 1
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glfw/src/CMakeFiles/update_mappings.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
+.PHONY : glfw/src/CMakeFiles/update_mappings.dir/rule
+
+# Convenience name for target.
+update_mappings: glfw/src/CMakeFiles/update_mappings.dir/rule
+
+.PHONY : update_mappings
+
+# clean rule for target.
+glfw/src/CMakeFiles/update_mappings.dir/clean:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/update_mappings.dir/build.make glfw/src/CMakeFiles/update_mappings.dir/clean
+.PHONY : glfw/src/CMakeFiles/update_mappings.dir/clean
+
+#=============================================================================
+# Target rules for target glfw/src/CMakeFiles/glfw.dir
+
+# All Build rule for target.
+glfw/src/CMakeFiles/glfw.dir/all:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/glfw.dir/build.make glfw/src/CMakeFiles/glfw.dir/depend
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/glfw.dir/build.make glfw/src/CMakeFiles/glfw.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Built target glfw"
+.PHONY : glfw/src/CMakeFiles/glfw.dir/all
+
+# Build rule for subdir invocation for target.
+glfw/src/CMakeFiles/glfw.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 16
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glfw/src/CMakeFiles/glfw.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
+.PHONY : glfw/src/CMakeFiles/glfw.dir/rule
+
+# Convenience name for target.
+glfw: glfw/src/CMakeFiles/glfw.dir/rule
+
+.PHONY : glfw
+
+# clean rule for target.
+glfw/src/CMakeFiles/glfw.dir/clean:
+	$(MAKE) $(MAKESILENT) -f glfw/src/CMakeFiles/glfw.dir/build.make glfw/src/CMakeFiles/glfw.dir/clean
+.PHONY : glfw/src/CMakeFiles/glfw.dir/clean
+
+#=============================================================================
+# Target rules for target twoplayer/CMakeFiles/twoplayer.dir
+
+# All Build rule for target.
+twoplayer/CMakeFiles/twoplayer.dir/all: engine/CMakeFiles/engine.dir/all
+twoplayer/CMakeFiles/twoplayer.dir/all: glad/CMakeFiles/Glad.dir/all
+twoplayer/CMakeFiles/twoplayer.dir/all: glfw/src/CMakeFiles/glfw.dir/all
+	$(MAKE) $(MAKESILENT) -f twoplayer/CMakeFiles/twoplayer.dir/build.make twoplayer/CMakeFiles/twoplayer.dir/depend
+	$(MAKE) $(MAKESILENT) -f twoplayer/CMakeFiles/twoplayer.dir/build.make twoplayer/CMakeFiles/twoplayer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=21,22 "Built target twoplayer"
+.PHONY : twoplayer/CMakeFiles/twoplayer.dir/all
+
+# Build rule for subdir invocation for target.
+twoplayer/CMakeFiles/twoplayer.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 22
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twoplayer/CMakeFiles/twoplayer.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles 0
+.PHONY : twoplayer/CMakeFiles/twoplayer.dir/rule
+
+# Convenience name for target.
+twoplayer: twoplayer/CMakeFiles/twoplayer.dir/rule
+
+.PHONY : twoplayer
+
+# clean rule for target.
+twoplayer/CMakeFiles/twoplayer.dir/clean:
+	$(MAKE) $(MAKESILENT) -f twoplayer/CMakeFiles/twoplayer.dir/build.make twoplayer/CMakeFiles/twoplayer.dir/clean
+.PHONY : twoplayer/CMakeFiles/twoplayer.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

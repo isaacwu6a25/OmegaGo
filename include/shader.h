@@ -3,8 +3,8 @@
 #ifndef SHADER_H_INCLUDED
 #define SHADER_H_INCLUDED
 
-#include <glad/glad.h> // for all required OpenGL headers
-#include <glm/glm.hpp>
+#include "../glad/glad.h" // for all required OpenGL headers
+#include "../glm/glm.hpp"
 
 #include <string>
 #include <fstream>

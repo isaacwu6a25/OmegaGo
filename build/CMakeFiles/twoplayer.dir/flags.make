@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/isaacwu/Documents/GitHub/OmegaGo/build -I"/Users/isaacwu/Documents/GitHub/OmegaGo/include/**"
+CXX_INCLUDES = -I/Users/isaacwu/Documents/GitHub/OmegaGo/build -I/Users/isaacwu/Documents/GitHub/OmegaGo/include/glad
 
 CXX_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.0.sdk -std=gnu++17
 

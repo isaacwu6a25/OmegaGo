@@ -98,7 +98,7 @@ twoplayer_EXTERNAL_OBJECTS =
 
 twoplayer: CMakeFiles/twoplayer.dir/twoplayer.cpp.o
 twoplayer: CMakeFiles/twoplayer.dir/build.make
-twoplayer: include/glad/libGlad.a
+twoplayer: include/glfw-3.3.6/include/libGlad.a
 twoplayer: CMakeFiles/twoplayer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/isaacwu/Documents/GitHub/OmegaGo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable twoplayer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/twoplayer.dir/link.txt --verbose=$(VERBOSE)
