@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.0.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/twoplayer.dir/twoplayer.cpp.o -o twoplayer  include/glfw-3.3.6/include/libGlad.a -lGLFW 
